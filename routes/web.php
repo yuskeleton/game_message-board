@@ -14,8 +14,15 @@ use App\Http\Controllers\ReviewController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [ReviewController::class, 'index'])->name('index');
-
+Route::controller(ReviewController::class)->middleware(['auth'])->group(function(){
+    Route::get('/', 'index')->name('index');
+    Route::post('/reviews', 'store')->name('store');
+    Route::get('/reviews/create', 'create')->name('create');
+    Route::get('/reviews/{review}', 'show')->name('show');
+    Route::put('/reviews/{review}', 'update')->name('update');
+    Route::delete('/reviews/{review}', 'delete')->name('delete');
+    Route::get('/reviews/{review}/edit', 'edit')->name('edit');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

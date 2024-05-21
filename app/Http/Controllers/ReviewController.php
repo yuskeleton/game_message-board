@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index(Review $review)
     {
-        return view('reviews.index')->with(['reviews' => $review->get()]);
+        return view('reviews.index')->with(['reviews' => $review->getPaginateByLimit()]);
     }
 
     /**
@@ -45,9 +45,9 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Review $review)
     {
-        //
+        return view('reviews.show')->with(['review' => $review]);
     }
 
     /**
