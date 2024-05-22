@@ -37,6 +37,8 @@ class ReviewController extends Controller
     {
        $input = $request['reviews'];
        $review->fill($input)->save();
+       return redirect('/' . $review->id);
+       dd();
     }
 
     /**
