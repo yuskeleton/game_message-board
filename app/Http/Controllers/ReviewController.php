@@ -24,7 +24,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        return view('reviews.create');
     }
 
     /**
@@ -33,10 +33,10 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Review $review)
     {
-        $task_name = $request->input('reviw_name');
-        dd($reviw_name);
+       $input = $request['reviews'];
+       $review->fill($input)->save();
     }
 
     /**

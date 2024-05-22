@@ -1,4 +1,5 @@
 <x-app-layout>
+    <a href="/reviews/create"> 作成画面</a>
     <h1>コメント</h1>
     <div class='reviews'>
         @foreach ($reviews as $review)
