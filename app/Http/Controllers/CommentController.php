@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
-class ReviewController extends Controller
+class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Review $review, Comment $comment)
+    public function index(Comment $comment)
     {
-        return view('reviews.index')->with(['reviews' => $review->getPaginateByLimit()]);
+        return view('comments.index')->with(['comments' => $comment->getPaginateByLimit()]);
     }
 
     /**
@@ -25,7 +19,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return view('reviews.create');
+        return view('comments.create');
     }
 
     /**
@@ -34,11 +28,11 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Review $review)
+    public function store(Request $request, Comment $comment)
     {
-       $input = $request['reviews'];
-       $review->fill($input)->save();
-       return redirect('/reviews/' . $review->id);
+       $input = $request['comments'];
+       $comment->fill($input)->save();
+       return redirect('/comments/' . $comment->id);
     }
 
     /**
@@ -47,9 +41,9 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Review $review)
+    public function show(Comment $comment)
     {
-        return view('reviews.show')->with(['review' => $review]);
+        return view('comments.show')->with(['comment' => $comment]);
     }
 
     /**
@@ -58,9 +52,9 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Review $review)
+    public function edit(comment $comment)
     {
-        return view('reviews.edit')->with(['review' => $review]);
+        return view('comments.edit')->with(['comment' => $comment]);
     }
 
     /**
@@ -70,11 +64,11 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, Comment $comment)
     {
-        $input_review = $request['review'];
-        $review->fill($input_review)->save();
-        return redirect('/reviews/' . $review->id);
+        $input_comment = $request['comment'];
+        $comment->fill($input_comment)->save();
+        return redirect('/comments/' . $comment->id);
     }
 
     /**
@@ -83,9 +77,9 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Review $review)
+    public function delete(Comment $comment)
     {
-        $review->delete();
+        $comment->delete();
         return redirect('/');
     }
 }

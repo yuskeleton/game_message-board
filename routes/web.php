@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
-
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +32,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::controller(CommentController::class)->middleware(['auth'])->group(function(){
+    Route::get('/comments', 'index')->name('index');
+    Route::post('/comments', 'store')->name('store');
+    Route::get('/comments/create', 'create')->name('create');
+    Route::get('/comments/{comment}', 'show')->name('show');
+    Route::put('/comments/{comment}', 'update')->name('update');
+    Route::delete('/comments/{comment}', 'delete')->name('delete');
+    Route::get('/comments/{comment}/edit', 'edit')->name('edit');
 });
 
 require __DIR__.'/auth.php';
