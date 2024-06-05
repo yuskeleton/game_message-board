@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -28,11 +29,14 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Comment $comment)
+    public function store(Request $request, Review $review, Comment $comment)
     {
-       $input = $request['comments'];
-       $comment->fill($input)->save();
-       return redirect('/comments/' . $comment->id);
+        $request->validate(['body' => 'required|string|max:1000',]);
+        $comment->body = $request->input('body');
+        $comment->review_id = $review->id;
+        $comment->user_id = auth()->id(); // ログインユーザーのIDを取得
+        $comment->save();
+        return redirect('/reviews/' . $review->id);
     }
 
     /**
@@ -77,9 +81,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Comment $comment)
+    public function delete(Review $review, Comment $comment)
     {
         $comment->delete();
-        return redirect('/');
+        return redirect('/reviews/' . $review->id);
     }
 }

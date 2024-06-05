@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +19,7 @@ use App\Http\Controllers\CommentController;
 Route::controller(ReviewController::class)->middleware(['auth'])->group(function(){
     Route::get('/', 'index')->name('index');
     Route::post('/reviews', 'store')->name('store');
+    Route::post('/reviews/{review}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/reviews/create', 'create')->name('create');
     Route::get('/reviews/{review}', 'show')->name('show');
     Route::put('/reviews/{review}', 'update')->name('update');
@@ -40,8 +43,16 @@ Route::controller(CommentController::class)->middleware(['auth'])->group(functio
     Route::get('/comments/create', 'create')->name('create');
     Route::get('/comments/{comment}', 'show')->name('show');
     Route::put('/comments/{comment}', 'update')->name('update');
-    Route::delete('/comments/{comment}', 'delete')->name('delete');
+    Route::delete('/reviews/{review}/comments/{comment}', 'delete')->name('delete');
     Route::get('/comments/{comment}/edit', 'edit')->name('edit');
 });
+
+Route::controller(LikeController::class)->middleware(['auth'])->group(function(){
+    Route::post('/reviews/{review}/like', 'likeReview')->name('likeReview');
+    Route::post('/reviews/{review}/unlike', 'unlikeReview')->name('unlikeReview');
+});
+
+
+
 
 require __DIR__.'/auth.php';

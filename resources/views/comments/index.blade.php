@@ -1,15 +1,23 @@
 <x-app-layout>
-    <a href="/comments/create"> コメント</a>
     <h1>返信</h1>
     <div class='comments'>
         @foreach ($comments as $comment)
-            <div class='comment'>
+        <div class='comment'>
             <a href="/comments/{{ $comment->id }}">{{ $comment->body }}</a>
-            </div>
+        </div>
         @endforeach
+                <form action="{{ route('comments.store', $review) }}" method="POST">
+                @csrf
+                    <div>
+                        <textarea name="body" rows="3" required></textarea>
+                    </div>
+                    <div>
+                        <button type="submit">コメントを追加</button>
+                    </div>
+                </form>
     </div>
         <div class='paginate'>
             {{ $comments->links() }}
-    </div>
+        </div>
 </x-app-layout>
 

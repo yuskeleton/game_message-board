@@ -85,6 +85,7 @@ class ReviewController extends Controller
      */
     public function delete(Review $review)
     {
+        $review->comments()->delete();
         $review->delete();
         return redirect('/');
     }
