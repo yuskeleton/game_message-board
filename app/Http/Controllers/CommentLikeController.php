@@ -2,38 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\Comment;
 use App\Models\CommentLike;
 use Illuminate\Http\Request;
 
 class CommentLikeController extends Controller
-
 {
-     public function likeComment(Comment $comment)
+    
+    public function likeComment(Review $review, Comment $comment)
     {
         $comment = Comment::findOrFail($comment->id);
         $user = auth()->user();
 
-        if ($user->likes()->where('comment_id', $comment->id)->exists()) {
+        if ($user->CommentLike()->where('comment_id', $comment->id)->exists()) {
             return response()->json(['message' => 'Already liked'], 400);
         }
 
-        $user->likes()->attach($comment);
+        $user->CommentLike()->attach($comment);
 
-        return redirect('/');
+        return redirect('/reviews/' . $review->id .  '/comments');
     }
-        
-        public function unlikeComment(Comment $comment)
+    
+    public function unlikeComment(Review $review, Comment $comment)
     {
         $comment = Comment::findOrFail($comment->id);
         $user = auth()->user();
 
-        if (!$user->likes()->where('comment_id', $comment->id)->exists()) {
+        if (!$user->CommentLike()->where('comment_id', $comment->id)->exists()) {
             return response()->json(['message' => 'Not liked yet'], 400);
         }
 
-        $user->likes()->detach($comment);
+        $user->CommentLike()->detach($comment);
 
-        return redirect('/');
+        return redirect('/reviews/' . $review->id .  '/comments');
     }
 }

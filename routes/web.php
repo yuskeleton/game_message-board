@@ -39,13 +39,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(CommentController::class)->middleware(['auth'])->group(function(){
-    Route::get('/comments', 'index')->name('index');
-    Route::post('/comments', 'store')->name('store');
-    Route::get('/comments/create', 'create')->name('create');
-    Route::get('/comments/{comment}', 'show')->name('show');
-    Route::put('/comments/{comment}', 'update')->name('update');
-    Route::delete('/reviews/{review}/comments/{comment}', 'delete')->name('delete');
-    Route::get('/comments/{comment}/edit', 'edit')->name('edit');
+    Route::get('/reviews/{review}/comments', 'index')->name('comments.index');
+    Route::post('/reviews/{review}/comments', 'store')->name('comments.store');
+    Route::get('/reviews/{review}/comments/create', 'create')->name('comments.create');
+    Route::get('/reviews/{review}/comments/{comment}', 'show')->name('comments.show');
+    Route::put('/reviews/{review}/comments/{comment}', 'update')->name('comments.update');
+    Route::delete('/reviews/{review}/comments/{comment}', 'delete')->name('comments.delete');
+    Route::get('/reviews/{review}/comments/{comment}/edit', 'edit')->name('comments.edit');
 });
 
 Route::controller(LikeController::class)->middleware(['auth'])->group(function(){
@@ -54,8 +54,8 @@ Route::controller(LikeController::class)->middleware(['auth'])->group(function()
 });
 
 Route::controller(CommentLikeController::class)->middleware(['auth'])->group(function(){
-    Route::post('/comments/{comment}/like', 'likeComment')->name('likeComment');
-    Route::post('/comments/{comment}/unlike', 'unlikeComment')->name('unlikeComment');
+    Route::post('/reviews/{review}/comments/{comment}/like', 'likeComment')->name('likeComment');
+    Route::post('/reviews/{review}/comments/{comment}/unlike', 'unlikeComment')->name('unlikeComment');
 });
 
 

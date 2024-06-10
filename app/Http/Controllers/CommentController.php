@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index(Comment $comment)
+    
+    public function index(Review $review, Comment $comment)
     {
-        return view('comments.index')->with(['comments' => $comment->getPaginateByLimit()]);
+        return view('reviews.show')->with([
+            'review' => $review
+        ]);
     }
 
     /**
@@ -45,7 +48,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Review $review, Comment $comment)
     {
         return view('comments.show')->with(['comment' => $comment]);
     }
@@ -56,7 +59,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(comment $comment)
+    public function edit(Review $review, Comment $comment)
     {
         return view('comments.edit')->with(['comment' => $comment]);
     }
@@ -68,7 +71,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Review $review, Comment $comment)
     {
         $input_comment = $request['comment'];
         $comment->fill($input_comment)->save();

@@ -20,24 +20,22 @@
                         <strong class="block text-lg">{{ $comment->user->name }}</strong>
                         <p class="mb-2">{{ $comment->body }}</p>
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                @if (auth()->user()->likes->contains($comment->id))
-                                    <form action="{{ route('unlikeComment', $comment->id) }}" method="POST">
+                                @if (auth()->user()->CommentLike->contains($comment->id))
+                                    <form action="{{ route('unlikeComment', ['review' => $review->id, 'comment' => $comment->id]) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="text-red-500 text-2xl mr-2">
                                             <i class="fas fa-heart"></i> <!-- filled heart for unlike -->
                                         </button>
                                     </form>
                                 @else
-                                    <form action="{{ route('likeComment', $comment->id) }}" method="POST">
+                                    <form action="{{ route('likeComment', ['review' => $review->id, 'comment' => $comment->id]) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="text-gray-500 text-2xl mr-2">
                                             <i class="far fa-heart"></i> <!-- empty heart for like -->
                                         </button>
                                     </form>
                                 @endif
-                            </div>
-                            <a href="/comments/{{$comment->id}}/edit" class="text-blue-500 hover:underline">編集</a>
+                            <a href="/reviews/{{ $review->id }}/comments/{{ $comment->id }}/edit" class="text-blue-500 hover:underline">編集</a>
                         </div>
                         <form action="/reviews/{{ $review->id }}/comments/{{ $comment->id }}" id="form_comment_{{ $comment->id }}" method="post" class="mt-2">
                             @csrf
