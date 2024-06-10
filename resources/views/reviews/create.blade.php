@@ -9,7 +9,7 @@
             </div>
             <div class="mb-6">
                 <h2 class="text-xl font-bold mb-2">評価</h2>
-                <input type="number" name="reviews[stars]" placeholder="1" class="w-full p-2 border border-gray-300 rounded-md"/>
+                <input type="number" name="reviews[stars]" placeholder="1" class="w-full p-2 border border-gray-300 rounded-md" value="1"/>
             </div>
             <div class="flex justify-center">
                 <input type="submit" value="保存" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"/>

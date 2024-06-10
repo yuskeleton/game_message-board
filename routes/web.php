@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,11 @@ Route::controller(CommentController::class)->middleware(['auth'])->group(functio
 Route::controller(LikeController::class)->middleware(['auth'])->group(function(){
     Route::post('/reviews/{review}/like', 'likeReview')->name('likeReview');
     Route::post('/reviews/{review}/unlike', 'unlikeReview')->name('unlikeReview');
+});
+
+Route::controller(CommentLikeController::class)->middleware(['auth'])->group(function(){
+    Route::post('/comments/{comment}/like', 'likeComment')->name('likeComment');
+    Route::post('/comments/{comment}/unlike', 'unlikeComment')->name('unlikeComment');
 });
 
 
