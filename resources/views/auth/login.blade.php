@@ -44,5 +44,5 @@
             </x-primary-button>
         </div>
     </form>
-    <div class="edit"><a href="register">new account</a></div>
+    <div class="edit"><a href="register">New account</a></div>
 </x-guest-layout>
