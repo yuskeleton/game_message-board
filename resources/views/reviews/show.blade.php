@@ -1,12 +1,16 @@
 <x-app-layout>
     <div class="container mx-auto p-4">
         <div class="flex justify-between items-center mb-4">
-            <a href="/reviews/{{ $review->id }}/edit" class="text-blue-500 hover:underline">編集</a>
-            <form action="/reviews/{{ $review->id }}" id="form_review_{{ $review->id }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="button" onclick="deletereview({{ $review->id }})" class="text-red-500 hover:underline">削除</button> 
-            </form>
+            @auth
+                @if (auth()->id() === $review->user_id)
+                    <form action="/reviews/{{ $review->id }}" id="form_review_{{ $review->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="deletereview({{ $review->id }})" class="text-red-500 hover:underline">削除</button> 
+                    </form>
+                    <a href="/reviews/{{ $review->id }}/edit" class="text-blue-500 hover:underline">編集</a>
+                @endif
+            @endauth
         </div>
         <h1 class="text-3xl font-bold mb-4">
             {{ $review->title }}

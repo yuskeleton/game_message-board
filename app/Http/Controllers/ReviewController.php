@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,6 +41,7 @@ class ReviewController extends Controller
     public function store(Request $request, Review $review)
     {
        $input = $request['reviews'];
+       $input['user_id'] = auth()->id();
        $review->fill($input)->save();
        return redirect('/reviews/' . $review->id);
     }
@@ -85,7 +90,13 @@ class ReviewController extends Controller
      */
     public function delete(Review $review)
     {
+        /*もともと
         $review->comments()->delete();
+        $review->delete();
+        return redirect('/');
+        */
+        //ここから権限コード
+        $this->authorize('delete', $review);
         $review->delete();
         return redirect('/');
     }
